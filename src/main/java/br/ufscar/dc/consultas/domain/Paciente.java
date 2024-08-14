@@ -1,130 +1,120 @@
 package br.ufscar.dc.consultas.domain;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotBlank;
-
 @Entity
 @Table(name = "paciente")
-public class Paciente implements Serializable{
+public class Paciente implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotBlank
-	@Size(min=1, max=6)
-	@Column(nullable = false, unique = true, length = 60)
-    private Long CPF;
+    @Id
+    @Column(name = "cpf", nullable = false, unique = true, length = 11)
+    private String CPF;
 
-	@NotBlank
-	@Size(min=3, max=60)
-	@Column(nullable = false, length = 60)
+    @NotBlank
+    @Size(min = 3, max = 60)
+    @Column(nullable = false, length = 60)
     private String Nome;
-	
-	@NotBlank
-	@Column(nullable = false, length = 60, unique = true)
+
+    @NotBlank
+    @Column(nullable = false, length = 60, unique = true)
     private String Email;
-	
-	@NotBlank
-	@Size(min=4, max=60)
-	@Column(nullable = false, length = 60)
+
+    @NotBlank
+    @Size(min = 4, max = 60)
+    @Column(nullable = false, length = 60)
     private String Senha;
-	
-	@NotBlank
-	@Size(min=3, max=60)
-	@Column(nullable = false, length = 15)
+
+    @NotBlank
+    @Size(min = 3, max = 60)
+    @Column(nullable = false, length = 15)
     private String Telefone;
-	
-	@NotBlank
-	@Size(min=1, max=1)
-	@Column(nullable = false, length = 1)
+
+    @NotBlank
+    @Size(min = 1, max = 1)
+    @Column(nullable = false, length = 1)
     private String Sexo;
-	
-	@NotBlank
-	@Size(min=10, max=10)
-	@Column(nullable = false, length = 10)
+
+    @NotBlank
+    @Size(min = 10, max = 10)
+    @Column(nullable = false, length = 10)
     private String Data_nascimento;
 
-	@OneToMany(mappedBy = "paciente")
-	private List<Consulta> consultas;
+    @OneToMany(mappedBy = "paciente")
+    private List<Consulta> consultas;
 
-	
-	// Construtor padrão
+    // Construtor padrão
     public Paciente() {
     }
 
     // Getters e Setters
-	public String getNome() {
-		return Nome;
-	}
+    public String getNome() {
+        return Nome;
+    }
 
-	public void setNome(String nome) {
-		Nome = nome;
-	}
+    public void setNome(String nome) {
+        Nome = nome;
+    }
 
-	public String getEmail() {
-		return Email;
-	}
+    public String getEmail() {
+        return Email;
+    }
 
-	public void setEmail(String email) {
-		Email = email;
-	}
+    public void setEmail(String email) {
+        Email = email;
+    }
 
-	public String getSenha() {
-		return Senha;
-	}
+    public String getSenha() {
+        return Senha;
+    }
 
-	public void setSenha(String senha) {
-		Senha = senha;
-	}
+    public void setSenha(String senha) {
+        Senha = senha;
+    }
 
-	public String getTelefone() {
-		return Telefone;
-	}
+    public String getTelefone() {
+        return Telefone;
+    }
 
-	public void setTelefone(String telefone) {
-		Telefone = telefone;
-	}
-	
-	public String getSexo() {
-		return Sexo;
-	}
+    public void setTelefone(String telefone) {
+        Telefone = telefone;
+    }
 
-	public void setSexo(String sexo) {
-		Sexo = sexo;
-	}
-	
-	public String getData_nascimento() {
-		return Data_nascimento;
-	}
+    public String getSexo() {
+        return Sexo;
+    }
 
-	public void setData_nascimento(String datanascimento) {
-		Data_nascimento = datanascimento;
-	}
-	
-	public List<Consulta> getConsultas() {
-		return consultas;
-	}
+    public void setSexo(String sexo) {
+        Sexo = sexo;
+    }
 
-	public void setLivros(List<Consulta> consultas) {
-		this.consultas = consultas;
-	}
+    public String getData_nascimento() {
+        return Data_nascimento;
+    }
 
-	public Long getCPF() {
-		return CPF;
-	}
-	
+    public void setData_nascimento(String datanascimento) {
+        Data_nascimento = datanascimento;
+    }
+
+    public List<Consulta> getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(List<Consulta> consultas) {
+        this.consultas = consultas;
+    }
+
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
 }
