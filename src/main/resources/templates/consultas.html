@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Listagem de Consultas</title>
+    <style>
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #474284;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            margin: 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header-container a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #003366;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .header-container a.button:hover {
+            background-color: #002244;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            max-width: 960px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #003366;
+            color: #fff;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Listagem de Consultas</h1>
+            <a href="/consultas/novaConsulta" class="button">Nova Consulta</a>
+        </div>
+    </header>
+    
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Paciente</th>
+                    <th>Médico</th>
+                    <th>Horário</th>
+                    <th>Data da Consulta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Verifica se há consultas para exibir -->
+                <tr th:each="consulta : ${consultas}">
+                    <td th:text="${consulta.id}"></td>
+                    <td th:text="${consulta.paciente.nome}"></td>
+                    <td th:text="${consulta.medico.nome}"></td>
+                    <td th:text="${consulta.horario}"></td>
+                    <td th:text="${consulta.dataConsulta}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(consultas)}">
+                    <td colspan="5" class="no-data">Nenhuma consulta encontrada</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
