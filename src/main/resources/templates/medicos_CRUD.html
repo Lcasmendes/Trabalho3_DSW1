@@ -40,6 +40,7 @@
             text-decoration: none;
             border-radius: 5px;
             margin-bottom: 20px;
+            font-size: 14px;
         }
 
         a.button:hover {
@@ -76,6 +77,42 @@
             color: #666;
             margin-top: 20px;
         }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: left;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            padding: 8px 16px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .action-buttons .delete {
+            background-color: #d9534f;
+        }
+
+        .action-buttons .delete:hover {
+            background-color: #c9302c;
+            transform: scale(1.05);
+        }
+
+        .action-buttons .edit {
+            background-color: #003366;
+        }
+
+        .action-buttons .edit:hover {
+            background-color: #003266;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -105,7 +142,15 @@
                     <td th:text="${medico.email}"></td>
                     <td th:text="${medico.especialidade}"></td>
                     <td>
-                    	
+                        <div class="action-buttons">
+                            <!-- Link para excluir o médico -->
+                            <a href="#" th:href="@{/medicos/excluir(crm=${medico.CRM})}" 
+                               class="button delete" 
+                               onclick="return confirm('Você tem certeza que deseja excluir este médico?');">Excluir</a>
+                            <!-- Adicione um botão de edição, se necessário -->
+                            <a href="#" th:href="@{/medicos/editar(crm=${medico.CRM})}" 
+                               class="button edit">Editar</a>
+                        </div>
                     </td>
                 </tr>
                 <!-- Mensagem caso não haja médicos -->
