@@ -14,8 +14,10 @@
         header {
             background-color: #474284;
             color: #fff;
-            padding: 10px 0;
-            text-align: center;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .container {
@@ -29,10 +31,12 @@
 
         h1 {
             font-size: 24px;
-            margin-bottom: 20px;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
         }
 
-        a.button {
+        a.button, input[type="submit"] {
             display: inline-block;
             padding: 10px 20px;
             background-color: #003366;
@@ -40,9 +44,11 @@
             text-decoration: none;
             border-radius: 5px;
             margin-bottom: 20px;
+            cursor: pointer;
+            border: none;
         }
 
-        a.button:hover {
+        a.button:hover, input[type="submit"]:hover {
             background-color: #002244;
         }
 
@@ -76,16 +82,53 @@
             color: #666;
             margin-top: 20px;
         }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .search-form input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #003366;
+            border: 1px solid #003366;
+            border-radius: 5px;
+            background-color: #fff;
+			text-align: right;  
+    		width: fit-content; 
+        }
+
+        a:hover {
+            background-color: #003366;
+            color: #fff;
+        }
+        
     </style>
 </head>
 <body>
     <header>
-        <h1>Médicos</h1>
+        <h1>Médicos</h1> 
+        <a href="/login" >Login</a>
     </header>
 
     <div class="container">
-        <a href="/medicos/novo" class="button">Novo Médico</a>
-        <a href="/pacientes" class="button">Pacientes</a>
+
+        <!-- Formulário de busca por especialidade -->
+        <form class="search-form" th:action="@{/medicos/home}" method="get">
+            <input type="text" name="especialidade" placeholder="Buscar por especialidade" th:value="${param.especialidade}" />
+            <input type="submit" value="Buscar" />
+
+        </form>
         
         <table>
             <thead>
@@ -94,7 +137,6 @@
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Especialidade</th>
-                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
@@ -104,9 +146,6 @@
                     <td th:text="${medico.nome}"></td>
                     <td th:text="${medico.email}"></td>
                     <td th:text="${medico.especialidade}"></td>
-                    <td>
-                    	
-                    </td>
                 </tr>
                 <!-- Mensagem caso não haja médicos -->
                 <tr th:if="${#lists.isEmpty(medicos)}">
@@ -114,6 +153,7 @@
                 </tr>
             </tbody>
         </table>
+        <a href="/medicos/home" class="clear-button">Limpar</a>
     </div>
 </body>
 </html>
