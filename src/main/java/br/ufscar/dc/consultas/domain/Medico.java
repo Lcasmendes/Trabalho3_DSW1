@@ -1,21 +1,10 @@
 package br.ufscar.dc.consultas.domain;
 
 import java.io.Serializable;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import java.util.List;
 
 
 @Entity
@@ -25,11 +14,8 @@ public class Medico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotBlank
-	@Size(min=1, max=6)
-	@Column(nullable = false, unique = true, length = 60)
-    private Long CRM;
+    @Column(name = "crm", nullable = false, unique = true, length = 6)
+    private String CRM;
 
 	@NotBlank
 	@Size(min=3, max=60)
@@ -63,7 +49,7 @@ public class Medico implements Serializable {
 	}
 
 	public void setNome(String nome) {
-		Nome = nome;
+		this.Nome = nome;
 	}
 
 	public String getEmail() {
@@ -71,7 +57,7 @@ public class Medico implements Serializable {
 	}
 
 	public void setEmail(String email) {
-		Email = email;
+		this.Email = email;
 	}
 
 	public String getSenha() {
@@ -79,7 +65,7 @@ public class Medico implements Serializable {
 	}
 
 	public void setSenha(String senha) {
-		Senha = senha;
+		this.Senha = senha;
 	}
 
 	public String getEspecialidade() {
@@ -87,11 +73,14 @@ public class Medico implements Serializable {
 	}
 
 	public void setEspecialidade(String especialidade) {
-		Especialidade = especialidade;
+		this.Especialidade = especialidade;
 	}
 	
-	public Long getCRM() {
+	public String getCRM() {
 		return CRM;
 	}
-
+	
+	public void setCRM(String CRM) {
+        this.CRM = CRM;
+    }
 }

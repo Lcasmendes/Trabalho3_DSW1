@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Médicos</title>
+    <style>
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #474284;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        a.button, input[type="submit"] {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #003366;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border: none;
+        }
+
+        a.button:hover, input[type="submit"]:hover {
+            background-color: #002244;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #003366;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .no-medics {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .search-form input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #003366;
+            border: 1px solid #003366;
+            border-radius: 5px;
+            background-color: #fff;
+			text-align: right;  
+    		width: fit-content; 
+        }
+
+        a:hover {
+            background-color: #003366;
+            color: #fff;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Médicos</h1> 
+        <a href="/login" >Login</a>
+    </header>
+
+    <div class="container">
+
+        <!-- Formulário de busca por especialidade -->
+        <form class="search-form" th:action="@{/medicos/home}" method="get">
+            <input type="text" name="especialidade" placeholder="Buscar por especialidade" th:value="${param.especialidade}" />
+            <input type="submit" value="Buscar" />
+
+        </form>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>CRM</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Especialidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop para listar os médicos -->
+                <tr th:each="medico : ${medicos}">
+                    <td th:text="${medico.CRM}"></td>
+                    <td th:text="${medico.nome}"></td>
+                    <td th:text="${medico.email}"></td>
+                    <td th:text="${medico.especialidade}"></td>
+                </tr>
+                <!-- Mensagem caso não haja médicos -->
+                <tr th:if="${#lists.isEmpty(medicos)}">
+                    <td colspan="5" class="no-medics">Nenhum médico encontrado.</td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="/medicos/home" class="clear-button">Limpar</a>
+    </div>
+</body>
+</html>

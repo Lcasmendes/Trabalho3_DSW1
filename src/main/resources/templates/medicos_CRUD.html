@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Pacientes</title>
+    <title>Home - Médicos</title>
     <style>
         body {
             font-family: 'Ubuntu', sans-serif;
@@ -71,7 +71,7 @@
             background-color: #f1f1f1;
         }
 
-        .no-patients {
+        .no-medics {
             text-align: center;
             color: #666;
             margin-top: 20px;
@@ -80,36 +80,37 @@
 </head>
 <body>
     <header>
-        <h1>Pacientes</h1>
+        <h1>Médicos</h1>
     </header>
 
     <div class="container">
-        <a href="/pacientes/novo" class="button">Novo Paciente</a>
-        <a href="/medicos" class="button">Médicos</a>
+        <a href="/medicos/novo" class="button">Novo Médico</a>
+        <a href="/pacientes" class="button">Pacientes</a>
+        
         <table>
             <thead>
                 <tr>
-                    <th>CPF</th>
+                    <th>CRM</th>
                     <th>Nome</th>
                     <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Sexo</th>
-                    <th>Data de Nascimento</th>
+                    <th>Especialidade</th>
+                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Loop para listar os pacientes -->
-                <tr th:each="paciente : ${pacientes}">
-                    <td th:text="${paciente.CPF}"></td>
-                    <td th:text="${paciente.Nome}"></td>
-                    <td th:text="${paciente.Email}"></td>
-                    <td th:text="${paciente.Telefone}"></td>
-                    <td th:text="${paciente.Sexo}"></td>
-                    <td th:text="${paciente.Data_nascimento}"></td>
+                <!-- Loop para listar os médicos -->
+                <tr th:each="medico : ${medicos}">
+                    <td th:text="${medico.CRM}"></td>
+                    <td th:text="${medico.nome}"></td>
+                    <td th:text="${medico.email}"></td>
+                    <td th:text="${medico.especialidade}"></td>
+                    <td>
+                    	
+                    </td>
                 </tr>
-                <!-- Mensagem caso não haja pacientes -->
-                <tr th:if="${#lists.isEmpty(pacientes)}">
-                    <td colspan="6" class="no-patients">Nenhum paciente encontrado.</td>
+                <!-- Mensagem caso não haja médicos -->
+                <tr th:if="${#lists.isEmpty(medicos)}">
+                    <td colspan="5" class="no-medics">Nenhum médico encontrado.</td>
                 </tr>
             </tbody>
         </table>
