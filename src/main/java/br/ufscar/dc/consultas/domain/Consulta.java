@@ -1,47 +1,37 @@
 package br.ufscar.dc.consultas.domain;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Objects;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "consulta")
 public class Consulta implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    
+
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "CPF", foreignKey = @ForeignKey(name = "FK_Paciente"), nullable = false)
+    @JoinColumn(name = "cpf", foreignKey = @ForeignKey(name = "FK_Paciente"), nullable = false)
     private Paciente paciente;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "CRM", foreignKey = @ForeignKey(name = "FK_Medico"), nullable = false)
+    @JoinColumn(name = "crm", foreignKey = @ForeignKey(name = "FK_Medico"), nullable = false)
     private Medico medico;
 
+    @NotNull
+    @Column(name = "horario", nullable = false, length = 15)
+    private String horario;
 
     @NotNull
-    @Column(name = "Horario", nullable = false, length = 15)
-    private String horario;
-    
-    @NotNull
-    @Column(name = "DataConsulta", nullable = false, length = 15)
+    @Column(name = "data_consulta", nullable = false, length = 15)
     private String dataConsulta;
 
     // Construtor padrão
