@@ -14,9 +14,9 @@ public class Medico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "crm", nullable = false, unique = true)
-	private Long crm; 
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, unique = true)
+	private String crm; 
 
 	@NotBlank
 	@Size(min=3, max=60)
@@ -78,10 +78,10 @@ public class Medico implements Serializable {
 	}
 	
 	public String getCRM() {
-		return CRM;
+		return crm;
 	}
 	
 	public void setCRM(String CRM) {
-        this.CRM = CRM;
+        this.crm = CRM;
     }
 }

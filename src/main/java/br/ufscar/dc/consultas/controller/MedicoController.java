@@ -5,6 +5,7 @@ import br.ufscar.dc.consultas.domain.Medico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,13 +79,39 @@ public class MedicoController {
         return "redirect:/medicos/CRUD";
     }
     
-    // Método POST para excluir um médico pelo seu ID
-    @PostMapping("/excluir")
-    public String excluirMedico(@RequestParam("id") Long id) {
-        medicoDAO.deleteById(id);
+    // Exclusão do medico
+    @GetMapping("/excluir")
+    public String deletarMedico(@RequestParam String crm) {
+        medicoDAO.deleteByCrm(crm);
         return "redirect:/medicos/CRUD";
     }
     
+    
+    // Função para a edição do medico, buscando todos seus valores padrões e preenchendo o 
+    // formulário para edição
+    @GetMapping("/editar") 
+    public String editarMedico(@RequestParam String crm, Model model) {
+    	// Busca o medico com o crm do botão clicado
+        Medico medico = medicoDAO.findByCrm(crm); 
+        model.addAttribute("medico", medico);
+        return "editar_medico"; 
+    }
+    
+    // Após alterar os dados no html, atualiza no banco
+    @PostMapping("/atualizar")
+    public String atualizarMedico(@RequestParam String crm, @RequestParam String nome,
+                                  @RequestParam String email, @RequestParam String especialidade, @RequestParam String senha) {
+    	// Recebe o medico do formulario, edita com os set e salva no banco
+        Medico medico = medicoDAO.findByCrm(crm);
+        medico.setNome(nome);
+        medico.setEmail(email);
+        medico.setEspecialidade(especialidade);
+        medico.setSenha(senha);
+        medicoDAO.save(medico); 
+        return "redirect:/medicos/CRUD";
+    }
+
+
     
 
 }
