@@ -1,34 +1,119 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Novo Paciente</title>
+    <style>
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #474284;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: 1px solid #003366;
+            background-color: #003366;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #002244;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #003366;
+            border: 1px solid #003366;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        a:hover {
+            background-color: #003366;
+            color: #fff;
+        }
+
+        .error {
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Novo Paciente</h1>
-    <form th:action="@{/pacientes/novo}" th:object="${paciente}" method="post">
-        <label for="CPF">CPF:</label>
-        <input type="text" id="CPF" th:field="*{CPF}" />
-        <br/>
-        <label for="Nome">Nome:</label>
-        <input type="text" id="Nome" th:field="*{Nome}" />
-        <br/>
-        <label for="Email">Email:</label>
-        <input type="text" id="Email" th:field="*{Email}" />
-        <br/>
-        <label for="Senha">Senha:</label>
-        <input type="text" id="Senha" th:field="*{Senha}" />
-        <br/>
-        <label for="Telefone">Telefone:</label>
-        <input type="text" id="Telefone" th:field="*{Telefone}" />
-        <br/>
-        <label for="Sexo">Sexo:</label>
-        <input type="text" id="Sexo" th:field="*{Sexo}" />
-        <br/>
-        <label for="Data_nascimento">Data de Nascimento:</label>
-        <input type="text" id="Data_nascimento" th:field="*{Data_nascimento}" />
-        <br/>
-        <button type="submit">Adicionar Paciente</button>
-    </form>
-    <a href="/pacientes">Voltar</a>
+    <header>
+        <h1>Novo Paciente</h1>
+    </header>
+    
+    <div class="container">
+        <form th:action="@{/pacientes/novo}" th:object="${paciente}" method="post">
+            <label for="CPF">CPF:</label>
+            <input type="text" id="CPF" th:field="*{CPF}" />
+            
+            <label for="Nome">Nome:</label>
+            <input type="text" id="Nome" th:field="*{Nome}" />
+            
+            <label for="Email">Email:</label>
+            <input type="text" id="Email" th:field="*{Email}" />
+            
+            <label for="Senha">Senha:</label>
+            <input type="password" id="Senha" th:field="*{Senha}" />
+            
+            <label for="Telefone">Telefone:</label>
+            <input type="text" id="Telefone" th:field="*{Telefone}" />
+            
+            <label for="Sexo">Sexo:</label>
+            <input type="text" id="Sexo" th:field="*{Sexo}" />
+            
+            <label for="Data_nascimento">Data de Nascimento:</label>
+            <input type="text" id="Data_nascimento" th:field="*{Data_nascimento}" placeholder="dd/mm/aaaa" />
+            
+            <input type="submit" value="Adicionar Paciente" />
+        </form>
+        
+        <a href="/pacientes">Voltar</a>
+    </div>
 </body>
 </html>

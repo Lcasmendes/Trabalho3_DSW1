@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PacienteDAO extends JpaRepository<Paciente, Long> {
+	
 }
