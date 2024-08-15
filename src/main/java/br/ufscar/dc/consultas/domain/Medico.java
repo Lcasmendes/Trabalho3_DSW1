@@ -14,8 +14,9 @@ public class Medico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @Column(name = "crm", nullable = false, unique = true, length = 6)
-    private String CRM;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "crm", nullable = false, unique = true)
+	private Long crm; 
 
 	@NotBlank
 	@Size(min=3, max=60)
