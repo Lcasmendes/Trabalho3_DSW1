@@ -1,143 +1,43 @@
-
 <!DOCTYPE html>
-<html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout2}">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    
+<title>Login</title>
 </head>
-
 <body>
+	<div layout:fragment="content" th:remove="tag">
 
-    <header>
-        <div class="header-container">
-            <h1>Consultas.com</h1>
-            <a href="/home/homepage" class="button"><fmt:message key="header.button.homepage" /></a>
-        </div>
-        
-    <form action="/home/mudaLinguagem" style="text-align:left">
-        <select id="lang" name="lang" onchange="submit()">
-            <option value="pt" ${lang == 'pt' ? 'selected' : ''}>Português</option>
-            <option value="en" ${lang == 'en' ? 'selected' : ''}>English</option>
-        </select>
-    </form>
-    
-    </header>
-    <div class="form-container">
-    	<h2>Login</h2>
-        <form action="${linkServletLogin}" method="post">
-            <fmt:message key="form.label.email" />: <input type="text" name="email"/>
-            <fmt:message key="form.label.senha" />: <input type="password" name="senha"/>
-            <input type="submit" value="Login"/>
-        </form>
-        
-        <%
-            String errorCode = (String) request.getParameter("errorCode");
-            if (errorCode != null) {
-                if (errorCode.equals("1")) {
-        %>
-            <div class="error-message"><fmt:message key="error.login.1" />.</div>
-        <%
-                }
-            }
-        %>
-    </div>
-    
-    
-<style>
-        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
-
-        body {
-            font-family: 'Ubuntu', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f5f5f5;
-        }
-
-        header {
-            background-color: #474284; 
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .header-container h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .header-container a.button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #003366; 
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .header-container a.button:hover {
-            background-color: #002244; 
-        }
-
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 80px; 
-            width: 100%;
-            max-width: 400px;
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            box-sizing: border-box; 
-        }
-
-        .form-container input[type="submit"] {
-            padding: 10px 20px;
-            border: 1px solid #003366; 
-            background-color: #003366; 
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .form-container input[type="submit"]:hover {
-            background-color: #002244;
-        }
-
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
-
+		<br /> <br /> <br />
+		<div>
+			<div class="col-md-6">
+				<h1>Login</h1>
+				<form th:action="@{/login}" method="post">
+					<div th:if="${param.error}">
+						<div class="alert alert-danger">
+							<span>Erro</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="username">Nome</label>: <input
+							type="text" id="username" name="username" class="form-control"
+							autofocus="autofocus">
+					</div>
+					<div class="form-group">
+						<label for="password">Senha</label>: <input
+							type="password" id="password" name="password"
+							class="form-control">
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-sm-3 col-sm-offset-3">
+								<input type="submit" name="login-submit" id="login-submit"
+									class="form-control btn btn-info" th:value="Submit">
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
