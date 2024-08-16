@@ -37,8 +37,8 @@ public class Medico implements Serializable {
 	@Column(nullable = false, length = 60)
     private String Especialidade;
 
-	@OneToMany(mappedBy = "medico")
-	private List<Consulta> consultas;
+	 @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+	 private List<Consulta> consultas;
 	
     // Construtor padrão
     public Medico() {

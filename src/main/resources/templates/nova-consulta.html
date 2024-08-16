@@ -61,98 +61,47 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
         }
 
         form input[type="submit"] {
-            padding: 10px 20px;
-            border: 1px solid #003366;
             background-color: #003366;
             color: #fff;
-            border-radius: 5px;
+            border: none;
+            padding: 10px 20px;
             cursor: pointer;
-            text-decoration: none;
-            text-align: center;
+            border-radius: 5px;
         }
 
         form input[type="submit"]:hover {
             background-color: #002244;
         }
-
-        .error {
-            color: red;
-            margin-top: 10px;
-        }
     </style>
-    <script>
-        function validateForm() {
-            var form = document.forms["novaConsulta"];
-            var horario = form["horario"].value;
-            var dataConsulta = form["dataConsulta"].value;
-
-            // Validação de horário
-            if (!validateHorario(horario)) {
-                alert("Por favor, insira um horário válido no formato 'HH:mm' entre 08:00 e 18:00.");
-                return false;
-            }
-
-            // Validação de data
-            if (!validateData(dataConsulta)) {
-                alert("Por favor, insira uma data válida no formato 'dd/mm/aaaa'.");
-                return false;
-            }
-
-            return true;
-        }
-
-        function validateHorario(horario) {
-            // Verifica se o horário está no formato HH:mm
-            var regex = /^([0-1]\d|2[0-3]):([0-5]\d)$/;
-            if (!regex.test(horario)) return false;
-
-            var parts = horario.split(":");
-            var hour = parseInt(parts[0], 10);
-            var minute = parseInt(parts[1], 10);
-
-            // Verifica se o horário está dentro do intervalo permitido
-            if (hour < 8 || hour > 18 || (hour === 18 && minute > 0) || minute % 30 !== 0) {
-                return false;
-            }
-
-            return true;
-        }
-
-        function validateData(data) {
-            // Verifica se a data está no formato dd/mm/aaaa
-            var regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-            if (!regex.test(data)) return false;
-
-            var parts = data.split("/");
-            var day = parseInt(parts[0], 10);
-            var month = parseInt(parts[1], 10);
-            var year = parseInt(parts[2], 10);
-
-            var date = new Date(year, month - 1, day);
-            return date.getFullYear() === year && date.getMonth() + 1 === month && date.getDate() === day;
-        }
-    </script>
 </head>
 <body>
     <header>
         <div class="header-container">
             <h1>Nova Consulta</h1>
-            <a href="/consultas/listarConsultas" class="button">Voltar</a>
+            <a href="/" class="button">Página Principal</a>
         </div>
     </header>
-    
-    <form name="novaConsulta" action="/consultas/novaConsulta" method="post" onsubmit="return validateForm()">
-        <label for="paciente">Paciente:</label>
-        <input type="text" id="paciente" name="paciente" maxlength="50" placeholder="Nome do Paciente" required />
+
+    <form name="novaConsulta" action="/consultas/novaConsulta" method="post">
+        <label for="pacienteCPF">CPF do Paciente:</label>
+        <input type="text" id="pacienteCPF" name="pacienteCPF" maxlength="11" placeholder="Digite o CPF do paciente" required />
         <br/>
 
-        <label for="medico">Médico:</label>
-        <input type="text" id="medico" name="medico" maxlength="50" placeholder="Nome do Médico" required />
+        <label for="medicoCRM">Médico:</label>
+        <select id="medicoCRM" name="medicoCRM" required>
+            <option value="" disabled selected>Selecione um médico</option>
+            <option th:each="medico : ${medicos}" th:value="${medico.CRM}" th:text="${medico.nome}"></option>
+        </select>
         <br/>
 
         <label for="horario">Horário:</label>

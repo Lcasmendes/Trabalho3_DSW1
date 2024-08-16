@@ -14,15 +14,15 @@ public class Consulta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "cpf", foreignKey = @ForeignKey(name = "FK_Paciente"), nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CPF", foreignKey = @ForeignKey(name = "FK_Paciente"), nullable = false)
     private Paciente paciente;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "crm", foreignKey = @ForeignKey(name = "FK_Medico"), nullable = false)
     private Medico medico;
 
@@ -38,7 +38,18 @@ public class Consulta implements Serializable {
     public Consulta() {
     }
 
+    public Consulta(Paciente paciente, Medico medico, String horario, String dataConsulta) {
+        this.paciente = paciente;
+        this.medico = medico;
+        this.horario = horario;
+        this.dataConsulta = dataConsulta;
+    }
+
     // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
     public Paciente getPaciente() {
         return paciente;
     }

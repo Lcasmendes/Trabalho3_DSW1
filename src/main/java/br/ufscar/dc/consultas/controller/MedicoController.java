@@ -1,5 +1,6 @@
 package br.ufscar.dc.consultas.controller;
 
+import br.ufscar.dc.consultas.dao.ConsultaDAO;
 import br.ufscar.dc.consultas.dao.MedicoDAO;
 import br.ufscar.dc.consultas.domain.Medico;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ public class MedicoController {
 
     @Autowired
     private MedicoDAO medicoDAO;  
-    
+    @Autowired
+    private ConsultaDAO consultaDAO;
 
     // Método GET para listar todos os médicos ou filtrar por especialidade
     @GetMapping("/home")
@@ -82,6 +84,7 @@ public class MedicoController {
     // Exclusão do medico
     @GetMapping("/excluir")
     public String deletarMedico(@RequestParam String crm) {
+    	consultaDAO.deleteByMedico_Crm(crm);
         medicoDAO.deleteByCrm(crm);
         return "redirect:/medicos/CRUD";
     }
