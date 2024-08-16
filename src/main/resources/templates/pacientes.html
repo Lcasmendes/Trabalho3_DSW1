@@ -40,6 +40,7 @@
             text-decoration: none;
             border-radius: 5px;
             margin-bottom: 20px;
+            font-size: 14px;
         }
 
         a.button:hover {
@@ -76,6 +77,42 @@
             color: #666;
             margin-top: 20px;
         }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: left;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            padding: 8px 16px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .action-buttons .delete {
+            background-color: #d9534f;
+        }
+
+        .action-buttons .delete:hover {
+            background-color: #c9302c;
+            transform: scale(1.05);
+        }
+
+        .action-buttons .edit {
+            background-color: #003366;
+        }
+
+        .action-buttons .edit:hover {
+            background-color: #003266;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -95,21 +132,35 @@
                     <th>Telefone</th>
                     <th>Sexo</th>
                     <th>Data de Nascimento</th>
+                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Loop para listar os pacientes -->
                 <tr th:each="paciente : ${pacientes}">
+                
                     <td th:text="${paciente.CPF}"></td>
                     <td th:text="${paciente.Nome}"></td>
                     <td th:text="${paciente.Email}"></td>
                     <td th:text="${paciente.Telefone}"></td>
                     <td th:text="${paciente.Sexo}"></td>
                     <td th:text="${paciente.Data_nascimento}"></td>
+                    <td>
+                        <div class="action-buttons">
+                            <!-- Link para excluir o médico -->
+                            <a href="#" th:href="@{/pacientes/excluir(cpf=${paciente.CPF})}" 
+                               class="button delete" 
+                               onclick="return confirm('Você tem certeza que deseja excluir este paciente?');">Excluir</a>
+                            <!-- Adicione um botão de edição, se necessário -->
+                            <a href="#" th:href="@{/pacientes/editar(cpf=${paciente.CPF})}" 
+                               class="button edit">Editar</a>
+                        </div>
+                    </td>
+                    
                 </tr>
                 <!-- Mensagem caso não haja pacientes -->
                 <tr th:if="${#lists.isEmpty(pacientes)}">
-                    <td colspan="6" class="no-patients">Nenhum paciente encontrado.</td>
+                    <td colspan="7" class="no-patients">Nenhum paciente encontrado.</td>
                 </tr>
             </tbody>
         </table>

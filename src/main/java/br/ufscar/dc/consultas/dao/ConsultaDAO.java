@@ -15,6 +15,10 @@ public interface ConsultaDAO extends JpaRepository<Consulta, Long> {
     @Modifying
     @Transactional
     void deleteByMedico_Crm(String crm);
+    
+    @Modifying
+    @Transactional
+    void deleteByPaciente_CPF(String CPF);
 
     @Query("SELECT c FROM Consulta c WHERE c.medico.crm = :crm AND c.horario = :horario AND c.dataConsulta = :dataConsulta")
     Optional<Consulta> findConsultaByMedicoAndHorarioAndDataConsulta(@Param("crm") String crm, @Param("horario") String horario, @Param("dataConsulta") String dataConsulta);
