@@ -82,6 +82,12 @@
         form input[type="submit"]:hover {
             background-color: #002244;
         }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -93,6 +99,9 @@
     </header>
 
     <form name="novaConsulta" action="/consultas/novaConsulta" method="post">
+        <!-- Exibe mensagens de erro gerais -->
+        <div class="error" th:if="${erro}" th:text="${erro}"></div>
+
         <label for="pacienteCPF">CPF do Paciente:</label>
         <input type="text" id="pacienteCPF" name="pacienteCPF" maxlength="11" placeholder="Digite o CPF do paciente" required />
         <br/>
