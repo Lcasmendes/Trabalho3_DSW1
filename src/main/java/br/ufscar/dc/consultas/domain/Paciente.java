@@ -48,7 +48,11 @@ public class Paciente implements Serializable {
 
     @OneToMany(mappedBy = "paciente")
     private List<Consulta> consultas;
-
+    
+    @NotBlank
+    @Column(nullable = false, length = 10)
+    private String role;
+    
     // Construtor padrão
     public Paciente() {
     }
@@ -117,4 +121,12 @@ public class Paciente implements Serializable {
     public void setCPF(String CPF) {
         this.CPF = CPF;
     }
+
+	public String getRole() {
+		return role;
+	}
+	
+	public void setRole(String role) {
+		this.role = role;
+	}
 }

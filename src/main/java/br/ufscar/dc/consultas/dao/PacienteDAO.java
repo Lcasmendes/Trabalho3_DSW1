@@ -13,6 +13,11 @@ import org.springframework.stereotype.Repository;
 public interface PacienteDAO extends JpaRepository<Paciente, Long> {
 
 	Paciente findByCPF(String CPF);
+	@Query("SELECT p FROM Paciente p WHERE p.Email = :Email")
+	Paciente findByEmail(String Email);
+	
+//    @SuppressWarnings("unchecked")
+//	Paciente save(Paciente paciente);
 	
     @Modifying
     @Transactional
