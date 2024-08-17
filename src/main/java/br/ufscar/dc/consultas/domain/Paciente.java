@@ -50,7 +50,7 @@ public class Paciente implements Serializable {
     private List<Consulta> consultas;
     
     @NotBlank
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 30)
     private String role;
     
     // Construtor padrão
