@@ -7,11 +7,13 @@ import br.ufscar.dc.consultas.domain.Consulta;
 import br.ufscar.dc.consultas.domain.Medico;
 import br.ufscar.dc.consultas.domain.Paciente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 import java.time.LocalDate;
@@ -43,7 +45,8 @@ public class ConsultaController {
 
     // Mostra o formulário de consulta
     @GetMapping("/novaConsulta")
-    public String novaConsultaForm(Model model) {
+    public String novaConsultaForm(@RequestParam(name = "cpf", required = false) String pacienteCPF, Model model) {
+        model.addAttribute("pacienteCPF", pacienteCPF);
         model.addAttribute("consulta", new Consulta());
         model.addAttribute("medicos", medicoDAO.findAll());
         return "nova-consulta";
@@ -95,12 +98,31 @@ public class ConsultaController {
 
             Consulta novaConsulta = new Consulta(paciente, medico, horario, dataConsulta);
             consultaDAO.save(novaConsulta);
-            return "redirect:/consultas/listarConsultas";
+            return "redirect:/consultas/consultas-paciente";
         } else {
             model.addAttribute("erro", "Paciente ou médico não encontrado. Verifique os dados e tente novamente.");
             model.addAttribute("medicos", medicoDAO.findAll());
             return "nova-consulta";
         }
+    }
+    
+    
+    // Lista todas as consultas de um determinado paciente buscando pelo CPF
+    @GetMapping("/consultas-paciente")
+    public String listarConsultasPorPaciente(String cpf, Model model) {
+    	Paciente paciente = pacienteDAO.findByCPF(cpf);
+        List<Consulta> consultas = consultaDAO.findByPaciente(paciente);
+        model.addAttribute("consultas", consultas);
+        return "consultas-paciente";
+    }
+    
+    // Lista todas as consultas de um determinado médico pelo CRM
+    @GetMapping("/consultas-medico")
+    public String listarConsultasPorMedico(String crm, Model model) {
+    	Medico medico = medicoDAO.findByCrm(crm);
+       List<Consulta> consultas = consultaDAO.findByMedico(medico);
+       model.addAttribute("consultas", consultas);
+       return "consultas-medico";
     }
 
 }

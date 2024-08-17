@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Listagem de Consultas</title>
+    <title>Consultas do Paciente</title>
     <style>
         body {
             font-family: 'Ubuntu', sans-serif;
@@ -76,8 +76,9 @@
 <body>
     <header>
         <div class="header-container">
-            <h1>Listagem de Consultas</h1>
-            <a href="/consultas/novaConsulta" class="button">Nova Consulta</a>
+            <h1>Consultas do Paciente</h1>
+            <a href="/consultas/novaConsulta?cpf=11111111111" class="button">Nova Consulta</a>
+			<a href="" class="button">Logout</a>
         </div>
     </header>
     
@@ -85,8 +86,6 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Paciente</th>
                     <th>Médico</th>
                     <th>Horário</th>
                     <th>Data da Consulta</th>
@@ -95,14 +94,12 @@
             <tbody>
                 <!-- Verifica se há consultas para exibir -->
                 <tr th:each="consulta : ${consultas}">
-                    <td th:text="${consulta.id}"></td>
-                    <td th:text="${consulta.paciente.nome}"></td>
                     <td th:text="${consulta.medico.nome}"></td>
                     <td th:text="${consulta.horario}"></td>
                     <td th:text="${consulta.dataConsulta}"></td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(consultas)}">
-                    <td colspan="5" class="no-data">Nenhuma consulta encontrada</td>
+                    <td colspan="4" class="no-data">Nenhuma consulta encontrada</td>
                 </tr>
             </tbody>
         </table>

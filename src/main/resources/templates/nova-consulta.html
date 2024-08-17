@@ -94,7 +94,7 @@
     <header>
         <div class="header-container">
             <h1>Nova Consulta</h1>
-            <a href="/" class="button">Página Principal</a>
+            <a th:href="@{/consultas/consultas-paciente(cpf=${pacienteCPF})}" class="button">Voltar</a>
         </div>
     </header>
 
@@ -102,8 +102,16 @@
         <!-- Exibe mensagens de erro gerais -->
         <div class="error" th:if="${erro}" th:text="${erro}"></div>
 
-        <label for="pacienteCPF">CPF do Paciente:</label>
-        <input type="text" id="pacienteCPF" name="pacienteCPF" maxlength="11" placeholder="Digite o CPF do paciente" required />
+  <label for="pacienteCPF">CPF do Paciente:</label>
+        <input 
+            type="text" 
+            id="pacienteCPF" 
+            name="pacienteCPF" 
+            th:value="${pacienteCPF}" 
+            th:placeholder="${pacienteCPF}" 
+            readonly 
+            required 
+        />
         <br/>
 
         <label for="medicoCRM">Médico:</label>
