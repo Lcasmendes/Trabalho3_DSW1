@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Bean;
 
 import br.ufscar.dc.consultas.dao.MedicoDAO;
 import br.ufscar.dc.consultas.dao.PacienteDAO;
+import br.ufscar.dc.consultas.dao.AdminDAO;
 import br.ufscar.dc.consultas.domain.Paciente;
+import br.ufscar.dc.consultas.domain.Admin;
 import br.ufscar.dc.consultas.domain.Medico;
 
 @SpringBootApplication
@@ -23,7 +25,7 @@ public class ConsultasApplication implements CommandLineRunner {
 	}
 	
 	@Bean
-	public CommandLineRunner demo(PacienteDAO pacienteDAO, MedicoDAO medicoDAO) {
+	public CommandLineRunner demo(PacienteDAO pacienteDAO, MedicoDAO medicoDAO, AdminDAO adminDao) {
 		return (args) -> {
 			
 			Paciente u1 = new Paciente();
@@ -53,7 +55,7 @@ public class ConsultasApplication implements CommandLineRunner {
 			u3.setCRM("111111");
 			u3.setEmail("mario@gmail.com");
 			u3.setNome("Mario");
-			//u1.setRole("ROLE_PACIENTE");
+			u3.setRole("ROLE_MEDICO");
 			u3.setSenha("mario");
 			u3.setEspecialidade("Cardiologista");
 			medicoDAO.save(u3);
@@ -63,11 +65,16 @@ public class ConsultasApplication implements CommandLineRunner {
 			u4.setCRM("111112");
 			u4.setEmail("astolfo@gmail.com");
 			u4.setNome("Astolfo");
-			//u1.setRole("ROLE_PACIENTE");
+			u4.setRole("ROLE_MEDICO");
 			u4.setSenha("astolfo");
 			u4.setEspecialidade("Oftamologista");
 			medicoDAO.save(u4);
 			
+			Admin u5 = new Admin();
+			u5.setEmail("admin");
+			u5.setSenha("admin");
+			u5.setRole("ROLE_ADMIN");
+			adminDao.save(u5);
 			
 			
 		};

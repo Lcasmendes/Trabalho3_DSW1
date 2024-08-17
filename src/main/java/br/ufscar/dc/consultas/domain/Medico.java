@@ -36,8 +36,13 @@ public class Medico implements Serializable {
 	@Size(min=3, max=60)
 	@Column(nullable = false, length = 60)
     private String Especialidade;
+	
+    @NotBlank
+    @Column(nullable = false, length = 30)
+    private String role;
+    
 
-	 @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
 	 private List<Consulta> consultas;
 	
     // Construtor padrão
@@ -84,4 +89,12 @@ public class Medico implements Serializable {
 	public void setCRM(String CRM) {
         this.crm = CRM;
     }
+	
+	public String getRole() {
+		return role;
+	}
+	
+	public void setRole(String role) {
+		this.role = role;
+	}
 }

@@ -32,6 +32,11 @@ public class Admin {
 	@Column(nullable = false, length = 60)
     private String Senha;
 	
+	
+    @NotBlank
+    @Column(nullable = false, length = 30)
+    private String role;
+    
 	// Construtor padrão
     public Admin() {
     }
@@ -50,5 +55,13 @@ public class Admin {
 
 	public void setSenha(String senha) {
 		Senha = senha;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+	
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

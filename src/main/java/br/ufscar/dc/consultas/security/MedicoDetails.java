@@ -7,33 +7,33 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.ufscar.dc.consultas.domain.Paciente;
+import br.ufscar.dc.consultas.domain.Medico;
 
 
  
 @SuppressWarnings("serial")
-public class PacienteDetails implements UserDetails {
+public class MedicoDetails implements UserDetails {
  
-    private Paciente paciente;
+    private Medico medico;
      
-    public PacienteDetails(Paciente paciente) {
-        this.paciente = paciente;
+    public MedicoDetails(Medico medico) {
+        this.medico = medico;
     }
  
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(paciente.getRole());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(medico.getRole());
         return Arrays.asList(authority);
     }
  
     @Override
     public String getPassword() {
-        return paciente.getSenha();
+        return medico.getSenha();
     }
  
     @Override
     public String getUsername() {
-        return paciente.getEmail();
+        return medico.getEmail();
     }
  
     @Override
@@ -56,8 +56,8 @@ public class PacienteDetails implements UserDetails {
         return true;
     }
 
-	public Paciente getUsuario() {
-		return paciente;
+	public Medico getUsuario() {
+		return medico;
 	}
     
 }
