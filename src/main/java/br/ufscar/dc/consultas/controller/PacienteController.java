@@ -50,6 +50,8 @@ public class PacienteController {
     // Mapeia requisições HTTP POST para "/pacientes/novo" para adicionar um novo paciente
     @PostMapping("/novo")
     public String adicionarPaciente(Paciente paciente) {
+    	// Seta o role dele fixamente pro login
+    	paciente.setRole("PACIENTE");
         // Salva o paciente no banco de dados através do PacienteDAO
         pacienteDAO.save(paciente);
         // Redireciona para a lista de pacientes após a adição

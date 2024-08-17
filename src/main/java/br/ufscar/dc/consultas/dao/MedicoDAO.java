@@ -22,4 +22,7 @@ public interface MedicoDAO extends JpaRepository<Medico, Long> {
     void deleteByCrm(@Param("crm") String crm);
     
     Medico findByCrm(String crm);
+    
+	@Query("SELECT p FROM Medico p WHERE p.Email = :Email")
+	Medico findByEmail(String Email);
 }
