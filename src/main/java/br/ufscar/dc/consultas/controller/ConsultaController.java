@@ -35,13 +35,14 @@ public class ConsultaController {
     @Autowired
     private MedicoDAO medicoDAO;
 
+    /*
     // Listagem de consultas
     @GetMapping("/listarConsultas")
     public String listarConsultas(Model model) {
         List<Consulta> consultas = consultaDAO.findAll();
         model.addAttribute("consultas", consultas);
         return "consultas";
-    }
+    }    */
 
     // Mostra o formulário de consulta
     @GetMapping("/novaConsulta")
@@ -61,6 +62,9 @@ public class ConsultaController {
         // Verificação de horário válido
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime horarioConsulta;
+        
+        model.addAttribute("pacienteCPF", pacienteCPF);
+        
         try {
             horarioConsulta = LocalTime.parse(horario, timeFormatter);
         } catch (DateTimeParseException e) {
@@ -75,7 +79,7 @@ public class ConsultaController {
             model.addAttribute("medicos", medicoDAO.findAll());
             return "nova-consulta";
         }
-
+        
         // Verificação de data válida
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataConsultaValida;
@@ -98,7 +102,7 @@ public class ConsultaController {
 
             Consulta novaConsulta = new Consulta(paciente, medico, horario, dataConsulta);
             consultaDAO.save(novaConsulta);
-            return "redirect:/consultas/consultas-paciente";
+            return "redirect:/consultas/consultas-paciente?cpf=" + pacienteCPF;
         } else {
             model.addAttribute("erro", "Paciente ou médico não encontrado. Verifique os dados e tente novamente.");
             model.addAttribute("medicos", medicoDAO.findAll());
@@ -113,6 +117,7 @@ public class ConsultaController {
     	Paciente paciente = pacienteDAO.findByCPF(cpf);
         List<Consulta> consultas = consultaDAO.findByPaciente(paciente);
         model.addAttribute("consultas", consultas);
+        model.addAttribute("cpf", cpf);
         return "consultas-paciente";
     }
     

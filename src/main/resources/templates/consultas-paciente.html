@@ -77,7 +77,7 @@
     <header>
         <div class="header-container">
             <h1>Consultas do Paciente</h1>
-            <a href="/consultas/novaConsulta?cpf=11111111111" class="button">Nova Consulta</a>
+            <a th:href="@{/consultas/novaConsulta(cpf=${cpf})}" class="button">Nova Consulta</a>
 			<a href="/logout" class="button">Logout</a>
         </div>
     </header>

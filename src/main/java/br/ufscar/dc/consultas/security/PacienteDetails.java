@@ -35,6 +35,10 @@ public class PacienteDetails implements UserDetails {
     public String getUsername() {
         return paciente.getEmail();
     }
+    
+    public String getCpf() {
+        return paciente.getCPF();
+    }
  
     @Override
     public boolean isAccountNonExpired() {

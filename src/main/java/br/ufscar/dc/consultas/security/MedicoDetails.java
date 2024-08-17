@@ -35,6 +35,10 @@ public class MedicoDetails implements UserDetails {
     public String getUsername() {
         return medico.getEmail();
     }
+    
+    public String getCrm() {
+        return medico.getCRM();
+    }
  
     @Override
     public boolean isAccountNonExpired() {

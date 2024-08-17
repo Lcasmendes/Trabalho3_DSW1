@@ -15,7 +15,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.ufscar.dc.consultas.security.AdminDetailsServiceImpl;
+import br.ufscar.dc.consultas.security.MedicoDetails;
 import br.ufscar.dc.consultas.security.MedicoDetailsServiceImpl;
+import br.ufscar.dc.consultas.security.PacienteDetails;
 import br.ufscar.dc.consultas.security.PacienteDetailsServiceImpl;
 
 import java.io.IOException;
@@ -87,14 +89,19 @@ public class WebSecurityConfig {
                 .passwordParameter("Senha")
                 .successHandler((request, response, authentication) -> {
                     String role = authentication.getAuthorities().iterator().next().getAuthority();
-                    if (role.equals("ROLE_ADMIN")) {
+                    String crm = "";
+                    String cpf = ""; 
+                    
+                    if (role.equals("ROLE_MEDICO")) {
+                        crm = ((MedicoDetails) authentication.getPrincipal()).getCrm();
+                        response.sendRedirect("/consultas/consultas-medico?crm=" + crm);
+                    } else if (role.equals("ROLE_ADMIN")) {
                         response.sendRedirect("/medicos/CRUD");
-                    } else if (role.equals("ROLE_MEDICO")) {
-                        response.sendRedirect("/consultas/consultas-medico");
                     } else if (role.equals("ROLE_PACIENTE")) {
-                        response.sendRedirect("/consultas/consultas-paciente");
+                    	cpf = ((PacienteDetails) authentication.getPrincipal()).getCpf();
+                        response.sendRedirect("/consultas/consultas-paciente?cpf=" + cpf);
                     } else {
-                        response.sendRedirect("/default");
+                        response.sendRedirect("/login?error");
                     }
                 })
                 .loginProcessingUrl("/login")
