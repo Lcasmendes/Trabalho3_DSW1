@@ -29,7 +29,7 @@ public class ConsultasApplication implements CommandLineRunner {
 			u1.setData_nascimento("11/11/1111");
 			u1.setEmail("111");
 			u1.setNome("111");
-			u1.setRole("PACIENTE");
+			u1.setRole("ROLE_PACIENTE");
 			u1.setSenha("1111");
 			u1.setSexo("1");
 			u1.setTelefone("1111");
