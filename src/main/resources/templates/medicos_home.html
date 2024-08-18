@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Médicos</title>
+    <title th:text="#{header.button.homepage}"></title>
     <style>
         body {
             font-family: 'Ubuntu', sans-serif;
@@ -113,11 +113,22 @@
             color: #fff;
         }
         
+        #lang > a {
+        	font-size: 10px;
+        	border-radius: 10px;
+			padding: 5px 7px;
+        }
+        
     </style>
 </head>
 <body>
     <header>
-        <h1>Médicos</h1> 
+		<div id="lang">
+			<a th:href="@{''(lang=pt)}" th:text="#{lang.pt}"/></a>
+			<a th:href="@{''(lang=en)}" th:text="#{lang.en}"/></a>
+		</div>
+					
+        <h1 th:text="#{pagina.home.lista}"></h1> 
         <a href="/login" >Login</a>
     </header>
 
@@ -125,18 +136,18 @@
 
         <!-- Formulário de busca por especialidade -->
         <form class="search-form" th:action="@{/medicos/home}" method="get">
-            <input type="text" name="especialidade" placeholder="Buscar por especialidade" th:value="${param.especialidade}" />
-            <input type="submit" value="Buscar" />
+            <input type="text" name="especialidade" th:placeholder="#{pagina.home.buscaesp}" th:value="${param.especialidade}" />
+            <input type="submit" th:value="#{pagina.home.buscabtn}" />
 
         </form>
         
         <table>
             <thead>
                 <tr>
-                    <th>CRM</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Especialidade</th>
+                    <th th:text="#{form.label.CRM}"></th>
+                    <th th:text="#{form.label.nome}"></th>
+                    <th th:text="#{form.label.email}"></th>
+                    <th th:text="#{form.label.especialidade}"></th>
                 </tr>
             </thead>
             <tbody>
@@ -149,11 +160,11 @@
                 </tr>
                 <!-- Mensagem caso não haja médicos -->
                 <tr th:if="${#lists.isEmpty(medicos)}">
-                    <td colspan="5" class="no-medics">Nenhum médico encontrado.</td>
+                    <td colspan="5" class="no-medics" th:text="#{message.error.no_doctors}"></td>
                 </tr>
             </tbody>
         </table>
-        <a href="/medicos/home" class="clear-button">Limpar</a>
+        <a href="/medicos/home" class="clear-button" th:text="#{button.label.limpar}"></a>
     </div>
 </body>
 </html>

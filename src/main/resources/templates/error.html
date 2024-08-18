@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error</title>
+    <title th:text="#{page.error.title}"></title>
     <style>
         body {
             font-family: 'Ubuntu', sans-serif;
@@ -53,11 +53,11 @@
 </head>
 <body>
     <div class="error-container">
-        <h1>Error</h1>
-        <h2>Status Code: <span th:text="${status}"></span></h2>
+        <h1 th:text="#{page.error.title}"></h1>
+        <h2 th:text="#{page.error.statuscode}">: <span th:text="${status}"></span></h2>
         <p th:text="${error}"></p>
         <p th:text="${message}"></p>
-        <a href="javascript:history.back()">Go Back</a>
+        <a href="javascript:history.back()" th:text="#{button.label.voltar}"></a>
     </div>
 </body>
 </html>

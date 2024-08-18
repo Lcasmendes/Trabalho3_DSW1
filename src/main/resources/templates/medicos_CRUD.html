@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Médicos</title>
+    <title th:text="#{adm.medico.titulo}"></title>
     <style>
         body {
             font-family: 'Ubuntu', sans-serif;
@@ -117,23 +117,23 @@
 </head>
 <body>
     <header>
-        <h1>Médicos</h1>
+        <h1 th:text="#{adm.medico.lista}"></h1>
     </header>
 
     <div class="container">
-        <a href="/medicos/novo" class="button">Novo Médico</a>
-        <a href="/pacientes" class="button">Pacientes</a>
+        <a href="/medicos/novo" class="button" th:text="#{adm.medico.novo}"></a>
+        <a href="/pacientes" class="button" th:text="#{adm.medico.paciente}"></a>
         <a href="/logout" class="button">Logout</a> 
         
         
         <table>
             <thead>
                 <tr>
-                    <th>CRM</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Especialidade</th>
-                    <th>Opções</th>
+                    <th th:text="#{table.label.CRMMedico}"></th>
+                    <th th:text="#{table.label.nomeMedico}"></th>
+                    <th th:text="#{form.label.email}"></th>
+                    <th th:text="#{table.label.especialidade}"></th>
+                    <th th:text="#{table.label.config}"></th>
                 </tr>
             </thead>
             <tbody>
@@ -148,16 +148,16 @@
                             <!-- Link para excluir o médico -->
                             <a href="#" th:href="@{/medicos/excluir(crm=${medico.CRM})}" 
                                class="button delete" 
-                               onclick="return confirm('Você tem certeza que deseja excluir este médico?');">Excluir</a>
+                               onclick="return confirm('Você tem certeza que deseja excluir este médico?');" th:text="#{table.label.remove}"></a>
                             <!-- Adicione um botão de edição, se necessário -->
                             <a href="#" th:href="@{/medicos/editar(crm=${medico.CRM})}" 
-                               class="button edit">Editar</a>
+                               class="button edit" th:text="#{table.label.edita}"></a>
                         </div>
                     </td>
                 </tr>
                 <!-- Mensagem caso não haja médicos -->
                 <tr th:if="${#lists.isEmpty(medicos)}">
-                    <td colspan="5" class="no-medics">Nenhum médico encontrado.</td>
+                    <td colspan="5" class="no-medics" th:text="#{message.error.no_doctors}">.</td>
                 </tr>
             </tbody>
         </table>
