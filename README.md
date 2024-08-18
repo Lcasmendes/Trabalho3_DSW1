@@ -1,8 +1,9 @@
 Projeto 2 da disciplina DSW1: Desenvolvimento do site de consultas - Requisitos B
 
-Grupo: Guilherme Salvador Escher - RA
-       Leo Rodruigues Aoki - RA: 
-       Lucas Silva Mendes - RA: 800247
+Grupo: 
+- Guilherme Salvador Escher - RA 792528
+- Leo Rodruigues Aoki - RA: 801926
+- Lucas Silva Mendes - RA: 800247
 
 Para executar o projeto será necessário o PostgreeSQL, Java v22 e o EclipseIDE instalados.
 
@@ -43,3 +44,7 @@ No login você tem opção seguir como médico, paciente ou administrador:
     Senha: mario
 
   Aqui você pode vizualizar suas consultas cadastradas.
+
+Caso queira testar a internacionalização do site, basta alterar o idioma do seu navegador para inglês. 
+- Português e inglês são os dois idiomas suportados;
+- Recomendo o Firefox como navegador, pois foi onde o programa foi testado.
