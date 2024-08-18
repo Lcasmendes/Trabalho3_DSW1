@@ -25,4 +25,8 @@ public interface MedicoDAO extends JpaRepository<Medico, Long> {
     
 	@Query("SELECT p FROM Medico p WHERE p.Email = :Email")
 	Medico findByEmail(String Email);
+
+    @Query("SELECT DISTINCT m.Especialidade FROM Medico m")
+    List<String> findAllEspecialidade();
+
 }
