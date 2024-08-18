@@ -111,23 +111,11 @@
         a:hover {
             background-color: #003366;
             color: #fff;
-        }
-        
-        #lang > a {
-        	font-size: 10px;
-        	border-radius: 10px;
-			padding: 5px 7px;
-        }
-        
+        }        
     </style>
 </head>
 <body>
-    <header>
-		<div id="lang">
-			<a th:href="@{''(lang=pt)}" th:text="#{lang.pt}"/></a>
-			<a th:href="@{''(lang=en)}" th:text="#{lang.en}"/></a>
-		</div>
-					
+    <header>	
         <h1 th:text="#{pagina.home.lista}"></h1> 
         <a href="/login" >Login</a>
     </header>
