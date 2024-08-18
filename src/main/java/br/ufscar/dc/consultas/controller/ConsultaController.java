@@ -92,9 +92,17 @@ public class ConsultaController {
         }
 
         if (paciente != null && medico != null) {
+            // Verifica se o paciente já tem uma consulta no mesmo horário e data com outro médico
+            Optional<Consulta> consultaExistenteParaPaciente = consultaDAO.findConsultaByPacienteAndHorarioAndDataConsulta(pacienteCPF, horario, dataConsulta);
+            if (consultaExistenteParaPaciente.isPresent()) {
+                model.addAttribute("erro", "Você já tem uma consulta agendada para esta data e hora.");
+                model.addAttribute("medicos", medicoDAO.findAll());
+                return "nova-consulta";
+            }
+
             // Verifica se já existe uma consulta para o médico no mesmo horário e data
-            Optional<Consulta> consultaExistente = consultaDAO.findConsultaByMedicoAndHorarioAndDataConsulta(medicoCRM, horario, dataConsulta);
-            if (consultaExistente.isPresent()) {
+            Optional<Consulta> consultaExistenteParaMedico = consultaDAO.findConsultaByMedicoAndHorarioAndDataConsulta(medicoCRM, horario, dataConsulta);
+            if (consultaExistenteParaMedico.isPresent()) {
                 model.addAttribute("erro", "O médico já tem uma consulta agendada para este horário.");
                 model.addAttribute("medicos", medicoDAO.findAll());
                 return "nova-consulta";
@@ -108,6 +116,8 @@ public class ConsultaController {
             model.addAttribute("medicos", medicoDAO.findAll());
             return "nova-consulta";
         }
+ 
+
     }
     
     
