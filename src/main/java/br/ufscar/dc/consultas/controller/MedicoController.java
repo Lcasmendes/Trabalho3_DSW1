@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,22 +27,30 @@ public class MedicoController {
     @Autowired
     private ConsultaDAO consultaDAO;
 
-    // Método GET para listar todos os médicos ou filtrar por especialidade
     @GetMapping("/home")
-    public String listarMedicosHome(Model model, @RequestParam(value = "especialidade", required = false) String especialidade) {
-        List<Medico> medicos;
-        if (especialidade == null || especialidade.isEmpty()) {
-            // Se nenhuma especialidade for fornecida, lista todos os médicos
-            medicos = medicoDAO.findAll();
-        } else {
-            // Se uma especialidade for fornecida, filtra os médicos por essa especialidade
-            medicos = medicoDAO.buscarPorEspecialidade(especialidade);
-        }
-        // Adiciona a lista de médicos ao modelo
-        model.addAttribute("medicos", medicos);
-        // Retorna o nome da view a ser renderizada
-        return "medicos_home";
+public String listarMedicosHome(Model model, @RequestParam(value = "especialidade", required = false) String especialidade) {
+    List<Medico> medicos;
+    List<String> especialidades = new ArrayList<>();
+    
+    if (especialidade == null || especialidade.isEmpty()) {
+        // Se nenhuma especialidade for fornecida, lista todos os médicos
+        medicos = medicoDAO.findAll();
+    } else {
+        // Se uma especialidade for fornecida, filtra os médicos por essa especialidade
+        medicos = medicoDAO.buscarPorEspecialidade(especialidade);
     }
+    
+    // Obtém a lista de especialidades únicas dos médicos
+    especialidades = medicoDAO.findAllEspecialidade();
+    
+    // Adiciona a lista de médicos e especialidades ao modelo
+    model.addAttribute("medicos", medicos);
+    model.addAttribute("especialidades", especialidades);
+    
+    // Retorna o nome da view a ser renderizada
+    return "medicos_home";
+}
+
 
     // Método POST para buscar médicos por especialidade
     @PostMapping("/home")
