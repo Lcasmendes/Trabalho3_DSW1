@@ -88,6 +88,7 @@
     </header>
     
     <div class="container">
+    	
         <form th:action="@{/medicos/novo}" th:object="${medico}" method="post">
             <label for="CRM">CRM:</label>
             <input type="text" id="CRM" th:field="*{CRM}" />
@@ -104,6 +105,8 @@
             <label for="Especialidade">Especialidade:</label>
             <input type="text" id="Especialidade" th:field="*{Especialidade}" />
          
+         	 <!-- Exibe mensagens de erro gerais -->
+        	<div class="error" th:if="${erro}" th:text="${erro}"></div>
             
             <input type="submit" value="Adicionar Médico" />
         </form>

@@ -29,26 +29,26 @@ public class ConsultasApplication implements CommandLineRunner {
 		return (args) -> {
 			
 			Paciente u1 = new Paciente();
-			u1.setCPF("11111111111");
-			u1.setData_nascimento("11/11/1111");
-			u1.setEmail("111");
-			u1.setNome("111");
+			u1.setCPF("12345678998");
+			u1.setData_nascimento("11/11/2001");
+			u1.setEmail("genivaldo@gmail.com");
+			u1.setNome("Genivaldo");
 			u1.setRole("ROLE_PACIENTE");
-			u1.setSenha("1111");
-			u1.setSexo("1");
-			u1.setTelefone("1111");
+			u1.setSenha("genivaldo");
+			u1.setSexo("M");
+			u1.setTelefone("11934228462");
 			pacienteDAO.save(u1);
 			
 			
 			Paciente u2 = new Paciente();
-			u2.setCPF("22222222222");
-			u2.setData_nascimento("11/11/1111");
-			u2.setEmail("222");
-			u2.setNome("222");
+			u2.setCPF("14725836952");
+			u2.setData_nascimento("28/09/1984");
+			u2.setEmail("cristina@outlook.com");
+			u2.setNome("Cristina");
 			u2.setRole("ROLE_PACIENTE");
-			u2.setSenha("1111");
-			u2.setSexo("1");
-			u2.setTelefone("1111");
+			u2.setSenha("cristina");
+			u2.setSexo("F");
+			u2.setTelefone("32984956235");
 			pacienteDAO.save(u2);
 			
 			Medico u3 = new Medico();
@@ -62,7 +62,7 @@ public class ConsultasApplication implements CommandLineRunner {
 			
 			
 			Medico u4 = new Medico();
-			u4.setCRM("111112");
+			u4.setCRM("222222");
 			u4.setEmail("astolfo@gmail.com");
 			u4.setNome("Astolfo");
 			u4.setRole("ROLE_MEDICO");
