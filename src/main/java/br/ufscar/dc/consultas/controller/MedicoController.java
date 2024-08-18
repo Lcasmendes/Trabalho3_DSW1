@@ -75,8 +75,10 @@ public class MedicoController {
     // Mapeia requisições HTTP POST para "/medicos/novo" para adicionar um novo médico
     @PostMapping("/novo")
     public String adicionarMedico(Medico medico) {
+    	medico.setRole("MEDICO");
         // Salva o médico no banco de dados através do MedicoDAO
         medicoDAO.save(medico);
+        
         // Redireciona para a lista de médicos após a adição
         return "redirect:/medicos/CRUD";
     }
