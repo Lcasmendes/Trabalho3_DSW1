@@ -4,6 +4,8 @@ import br.ufscar.dc.consultas.dao.ConsultaDAO;
 import br.ufscar.dc.consultas.dao.MedicoDAO;
 import br.ufscar.dc.consultas.domain.Medico;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -72,16 +74,55 @@ public class MedicoController {
         return "novo-medico";
     }
 
-    // Mapeia requisições HTTP POST para "/medicos/novo" para adicionar um novo médico
     @PostMapping("/novo")
-    public String adicionarMedico(Medico medico) {
-    	medico.setRole("MEDICO");
-        // Salva o médico no banco de dados através do MedicoDAO
-        medicoDAO.save(medico);
+    public String adicionarMedico(Medico medico, Model model) {
+        medico.setRole("MEDICO");
+
+        Medico medicoConfirmacao = medicoDAO.findByCrm(medico.getCRM());
         
-        // Redireciona para a lista de médicos após a adição
-        return "redirect:/medicos/CRUD";
+
+        if (medicoConfirmacao == null) {
+        	// Validação de nome: verifica se o nome tem pelo menos 3 caracteres
+            if (medico.getNome() == null || medico.getNome().length() < 3) {
+                model.addAttribute("erro", "O nome deve ter pelo menos 3 caracteres");
+                System.out.println("O nome deve ter pelo menos 3 caracteres");
+                return "novo-medico";
+            
+            }
+        	// Validação do email: confirma se o email é de um domínio valido como gmail, yahoo ou outlook
+            if (!(medico.getEmail().endsWith("@gmail.com") || 
+                  medico.getEmail().endsWith("@yahoo.com") || 
+                  medico.getEmail().endsWith("@outlook.com"))) {
+                model.addAttribute("erro", "E-mail com domínio inválido");
+                System.out.println("E-mail com domínio inválido");
+                return "novo-medico";
+            }
+            
+            // Validação da senha: verifica se a senha tem pelo menos 4 caracteres
+            if (medico.getSenha() == null || medico.getSenha().length() < 4) {
+                model.addAttribute("erro", "A senha deve ter pelo menos 4 caracteres");
+                System.out.println("A senha deve ter pelo menos 4 caracteres");
+                return "novo-medico";
+            }    
+            
+            try {
+                // Tenta salvar o médico no banco de dados
+                medicoDAO.save(medico);
+                // Redireciona para a lista de médicos após a adição
+                return "redirect:/medicos/CRUD";
+            } catch (Exception e) {
+                // Captura outras exceções genéricas
+                model.addAttribute("erro", "Erro: " + e.getMessage());
+                System.out.println("Erro ao inserir médico: " + e.getMessage());
+                return "novo-medico";
+            }
+        } else {
+            model.addAttribute("erro", "Inserção inválida. Já existe médico com esse CRM");
+            System.out.println("Inserção inválida. Já existe médico com esse CRM");
+            return "novo-medico";
+        }
     }
+
     
     // Exclusão do medico
     @GetMapping("/excluir")
