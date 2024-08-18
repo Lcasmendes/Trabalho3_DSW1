@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Pacientes</title>
+    <title th:text="#{adm.paciente.titulo}"></title>
     <style>
         body {
             font-family: 'Ubuntu', sans-serif;
@@ -117,23 +117,23 @@
 </head>
 <body>
     <header>
-        <h1>Pacientes</h1>
+        <h1 th:text="#{adm.paciente.titulo}"></h1>
     </header>
 
     <div class="container">
-        <a href="/pacientes/novo" class="button">Novo Paciente</a>
-        <a href="/medicos/CRUD" class="button">Médicos</a>
+        <a href="/pacientes/novo" class="button" th:text="#{adm.paciente.novo}"></a>
+        <a href="/medicos/CRUD" class="button" th:text="#{adm.paciente.medico}"></a>
         <a href="/logout" class="button">Logout</a>
         <table>
             <thead>
                 <tr>
-                    <th>CPF</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Sexo</th>
-                    <th>Data de Nascimento</th>
-                    <th>Opções</th>
+                    <th th:text="#{form.label.CPF}"></th>
+                    <th th:text="#{form.label.nome}"></th>
+                    <th th:text="#{form.label.email}"></th>
+                    <th th:text="#{form.label.telefone}"></th>
+                    <th th:text="#{form.label.sexo}"></th>
+                    <th th:text="#{form.label.datanascimento}"></th>
+                    <th th:text="#{table.label.config}"></th>
                 </tr>
             </thead>
             <tbody>
@@ -151,17 +151,17 @@
                             <!-- Link para excluir o médico -->
                             <a href="#" th:href="@{/pacientes/excluir(cpf=${paciente.CPF})}" 
                                class="button delete" 
-                               onclick="return confirm('Você tem certeza que deseja excluir este paciente?');">Excluir</a>
+                               onclick="return confirm('Você tem certeza que deseja excluir este paciente?');" th:text="#{table.label.remove}"></a>
                             <!-- Adicione um botão de edição, se necessário -->
                             <a href="#" th:href="@{/pacientes/editar(cpf=${paciente.CPF})}" 
-                               class="button edit">Editar</a>
+                               class="button edit" th:text="#{table.label.edita}"></a>
                         </div>
                     </td>
                     
                 </tr>
                 <!-- Mensagem caso não haja pacientes -->
                 <tr th:if="${#lists.isEmpty(pacientes)}">
-                    <td colspan="7" class="no-patients">Nenhum paciente encontrado.</td>
+                    <td colspan="7" class="no-patients" th:text="#{message.error.no_patients}">.</td>
                 </tr>
             </tbody>
         </table>

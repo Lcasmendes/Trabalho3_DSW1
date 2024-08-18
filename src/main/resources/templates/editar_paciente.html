@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Editar paciente</title>
+    <title th:text="#{adm.editp.titulo}"></title>
     <style>
         body {
             font-family: 'Ubuntu', sans-serif;
@@ -84,36 +84,36 @@
 </head>
 <body>
     <header>
-        <h1>Editar Paciente</h1>
+        <h1 th:text="#{adm.editp.titulo}"></h1>
     </header>
     
     <div class="container">
         <form th:action="@{/pacientes/atualizar(cpf=${paciente.CPF})}" th:object="${paciente}" method="post">
-            <label for="CPF">CPF:</label>
+            <label for="CPF" th:text="#{form.label.CPF}">:</label>
             <input type="text" id="CPF" th:field="*{CPF}" placeholder="${paciente.CPF}" readonly />
             
-            <label for="Nome">Nome:</label>
+            <label for="Nome" th:text="#{form.label.nome}">:</label>
             <input type="text" id="Nome" th:field="*{nome}" placeholder="${paciente.nome}" />
             
-            <label for="Email">Email:</label>
+            <label for="Email" th:text="#{form.label.email}">:</label>
             <input type="text" id="Email" th:field="*{email}" placeholder="${paciente.email}" />
             
-            <label for="Senha">Senha:</label>
+            <label for="Senha" th:text="#{form.label.senha}">:</label>
             <input type="text" id="Senha" th:field="*{senha}" placeholder="${paciente.senha}" />
             
-            <label for="Telefone">Telefone:</label>
+            <label for="Telefone" th:text="#{form.label.telefone}">:</label>
             <input type="text" id="Telefone" th:field="*{telefone}" placeholder="${paciente.telefone}" />
             
-            <label for="Sexo">Sexo:</label>
+            <label for="Sexo" th:text="#{form.label.sexo}">:</label>
             <input type="text" id="Sexo" th:field="*{sexo}" placeholder="${paciente.sexo}" />
             
-            <label for="DataNascimento">Data de Nascimento:</label>
+            <label for="DataNascimento" th:text="#{form.label.datanascimento}">:</label>
             <input type="text" id="DataNascimento" th:field="*{data_nascimento}" placeholder="${paciente.data_nascimento}" />
             
-            <input type="submit" value="Atualizar paciente" />
+            <input type="submit" th:value="#{adm.editp.save}" />
         </form>
         
-        <a href="/pacientes">Voltar</a>
+        <a href="/pacientes" th:text="#{button.label.voltar}"></a>
     </div>
 </body>
 </html>

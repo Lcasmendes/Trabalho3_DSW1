@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Novo Paciente</title>
+    <title th:text="#{adm.novop.titulo}"></title>
     <style>
         body {
             font-family: 'Ubuntu', sans-serif;
@@ -84,36 +84,36 @@
 </head>
 <body>
     <header>
-        <h1>Novo Paciente</h1>
+        <h1 th:text="#{adm.novop.titulo}"></h1>
     </header>
     
     <div class="container">
         <form th:action="@{/pacientes/novo}" th:object="${paciente}" method="post">
-            <label for="CPF">CPF:</label>
+            <label for="CPF" th:text="#{form.label.CPF}">:</label>
             <input type="text" id="CPF" th:field="*{CPF}" />
             
-            <label for="Nome">Nome:</label>
+            <label for="Nome" th:text="#{form.label.nome}">:</label>
             <input type="text" id="Nome" th:field="*{Nome}" />
             
-            <label for="Email">Email:</label>
+            <label for="Email" th:text="#{form.label.email}">:</label>
             <input type="text" id="Email" th:field="*{Email}" />
             
-            <label for="Senha">Senha:</label>
+            <label for="Senha" th:text="#{form.label.senha}">:</label>
             <input type="password" id="Senha" th:field="*{Senha}" />
             
-            <label for="Telefone">Telefone:</label>
+            <label for="Telefone" th:text="#{form.label.telefone}">:</label>
             <input type="text" id="Telefone" th:field="*{Telefone}" />
             
-            <label for="Sexo">Sexo:</label>
+            <label for="Sexo" th:text="#{form.label.sexo}">:</label>
             <input type="text" id="Sexo" th:field="*{Sexo}" />
             
-            <label for="Data_nascimento">Data de Nascimento:</label>
+            <label for="Data_nascimento" th:text="#{form.label.datanascimento}">:</label>
             <input type="text" id="Data_nascimento" th:field="*{Data_nascimento}" placeholder="dd/mm/aaaa" />
             
-            <input type="submit" value="Adicionar Paciente" />
+            <input type="submit" th:value="#{adm.novop.save}" />
         </form>
         
-        <a href="/pacientes">Voltar</a>
+        <a href="/pacientes" th:text="#{button.label.voltar}"></a>
     </div>
 </body>
 </html>
