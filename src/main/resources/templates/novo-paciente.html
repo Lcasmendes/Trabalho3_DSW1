@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{adm.novop.titulo}"></title>
+    <title>Novo Paciente</title>
     <style>
         body {
             font-family: sans-serif;
@@ -84,36 +84,43 @@
 </head>
 <body>
     <header>
-        <h1 th:text="#{adm.novop.titulo}"></h1>
+        <h1>Novo Paciente</h1>
     </header>
     
     <div class="container">
         <form th:action="@{/pacientes/novo}" th:object="${paciente}" method="post">
-            <label for="CPF" th:text="#{form.label.CPF}">:</label>
+            <label for="CPF">CPF:</label>
             <input type="text" id="CPF" th:field="*{CPF}" />
+            <div th:if="${cpfExistente}" class="error" th:text="${cpfExistente}"></div>
             
-            <label for="Nome" th:text="#{form.label.nome}">:</label>
+            <label for="Nome">Nome:</label>
             <input type="text" id="Nome" th:field="*{Nome}" />
+            <div th:if="${nomeCurto}" class="error" th:text="${nomeCurto}"></div>
             
-            <label for="Email" th:text="#{form.label.email}">:</label>
+            <label for="Email">Email:</label>
             <input type="text" id="Email" th:field="*{Email}" />
+            <div th:if="${emailExistente}" class="error" th:text="${emailExistente}"></div>
+            <div th:if="${emailInvalido}" class="error" th:text="${emailInvalido}"></div>
             
-            <label for="Senha" th:text="#{form.label.senha}">:</label>
+            <label for="Senha">Senha:</label>
             <input type="password" id="Senha" th:field="*{Senha}" />
+            <div th:if="${senhaCurta}" class="error" th:text="${senhaCurta}"></div>
             
-            <label for="Telefone" th:text="#{form.label.telefone}">:</label>
+            <label for="Telefone">Telefone:</label>
             <input type="text" id="Telefone" th:field="*{Telefone}" />
+            <div th:if="${telefoneInvalido}" class="error" th:text="${telefoneInvalido}"></div>
             
-            <label for="Sexo" th:text="#{form.label.sexo}">:</label>
+            <label for="Sexo">Sexo:</label>
             <input type="text" id="Sexo" th:field="*{Sexo}" />
+            <div th:if="${sexoInvalido}" class="error" th:text="${sexoInvalido}"></div>
             
-            <label for="Data_nascimento" th:text="#{form.label.datanascimento}">:</label>
+            <label for="Data_nascimento">Data de Nascimento:</label>
             <input type="text" id="Data_nascimento" th:field="*{Data_nascimento}" placeholder="dd/mm/aaaa" />
             
-            <input type="submit" th:value="#{adm.novop.save}" />
+            <input type="submit" value="Adicionar Paciente" />
         </form>
         
-        <a href="/pacientes" th:text="#{button.label.voltar}"></a>
+        <a href="/pacientes">Voltar</a>
     </div>
 </body>
 </html>
