@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.ufscar.dc.consultas.security.AdminDetailsServiceImpl;
@@ -77,41 +76,21 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/medicos/home", "/login").permitAll() // Rotas públicas
-                .requestMatchers("/medicos/**", "/pacientes/**", "/pacientes").hasRole("ADMIN")
-                .requestMatchers("/consultas/consultas-medico").hasRole("MEDICO")
-                .requestMatchers("/consultas/consultas-paciente", "/consultas/novaConsulta").hasRole("PACIENTE")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll() // Permitir todas as rotas sem autenticação
             )
             .formLogin((form) -> form
                 .loginPage("/login")
                 .usernameParameter("Email")
                 .passwordParameter("Senha")
-                .successHandler((request, response, authentication) -> {
-                    String role = authentication.getAuthorities().iterator().next().getAuthority();
-                    String crm = "";
-                    String cpf = ""; 
-                    
-                    if (role.equals("ROLE_MEDICO")) {
-                        crm = ((MedicoDetails) authentication.getPrincipal()).getCrm();
-                        response.sendRedirect("/consultas/consultas-medico?crm=" + crm);
-                    } else if (role.equals("ROLE_ADMIN")) {
-                        response.sendRedirect("/medicos/CRUD");
-                    } else if (role.equals("ROLE_PACIENTE")) {
-                    	cpf = ((PacienteDetails) authentication.getPrincipal()).getCpf();
-                        response.sendRedirect("/consultas/consultas-paciente?cpf=" + cpf);
-                    } else {
-                        response.sendRedirect("/login?error");
-                    }
-                })
                 .loginProcessingUrl("/login")
+                .permitAll() // Permitir acesso à página de login sem autenticação
             )
             .logout(logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .permitAll()
+                .permitAll() // Permitir logout sem autenticação
             );
 
         return http.build();

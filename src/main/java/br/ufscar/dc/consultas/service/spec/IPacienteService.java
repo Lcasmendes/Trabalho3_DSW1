@@ -6,11 +6,13 @@ import br.ufscar.dc.consultas.domain.Paciente;
 
 public interface IPacienteService {
 
-	Paciente buscarPorId(Long id);
+	Paciente buscarPorId(String id);
 
 	List<Paciente> buscarTodos();
 
-	void salvar(Paciente editora);
+	void save(Paciente estado);
 
-	void excluir(Long id);	
+	void delete(String id);
+
+	Paciente buscarPorEmail(String email);
 }

@@ -3,6 +3,10 @@ package br.ufscar.dc.consultas.dao;
 import br.ufscar.dc.consultas.domain.Paciente;
 import jakarta.transaction.Transactional;
 
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,14 +14,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PacienteDAO extends JpaRepository<Paciente, Long> {
+public interface PacienteDAO extends CrudRepository<Paciente, Long> {
 
 	Paciente findByCPF(String CPF);
+	
 	@Query("SELECT p FROM Paciente p WHERE p.Email = :Email")
 	Paciente findByEmail(String Email);
 	
-//    @SuppressWarnings("unchecked")
-//	Paciente save(Paciente paciente);
+	List<Paciente> findAll();
+	
+	@SuppressWarnings("unchecked")
+	Paciente save(Paciente paciente);
 	
     @Modifying
     @Transactional

@@ -2,11 +2,13 @@ package br.ufscar.dc.consultas.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.List;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "paciente")
 public class Paciente implements Serializable {
@@ -23,6 +25,8 @@ public class Paciente implements Serializable {
     private String Nome;
 
     @NotBlank
+    @Size(min = 4, max = 60)
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@(gmail\\.com|outlook\\.com)$", message = "Email invalido")
     @Column(nullable = false, length = 60, unique = true)
     private String Email;
 
@@ -38,12 +42,14 @@ public class Paciente implements Serializable {
 
     @NotBlank
     @Size(min = 1, max = 1)
+    @Pattern(regexp = "M|F", message = "O sexo deve ser 'M' ou 'F'")
     @Column(nullable = false, length = 1)
     private String Sexo;
 
     @NotBlank
     @Size(min = 10, max = 10)
     @Column(nullable = false, length = 10)
+    @Pattern(regexp = "\\d{2}/\\d{2}/\\d{4}", message = "A data deve estar no formato dd/MM/yyyy")
     private String Data_nascimento;
 
     @OneToMany(mappedBy = "paciente")
