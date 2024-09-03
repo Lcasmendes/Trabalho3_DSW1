@@ -34,7 +34,7 @@ public String listarMedicosHome(Model model, @RequestParam(value = "especialidad
     
     if (especialidade == null || especialidade.isEmpty()) {
         // Se nenhuma especialidade for fornecida, lista todos os médicos
-        medicos = medicoDAO.findAll();
+        medicos = (List<Medico>) medicoDAO.findAll();
     } else {
         // Se uma especialidade for fornecida, filtra os médicos por essa especialidade
         medicos = medicoDAO.buscarPorEspecialidade(especialidade);
@@ -67,7 +67,7 @@ public String listarMedicosHome(Model model, @RequestParam(value = "especialidad
     @GetMapping("/CRUD")
     public String listarMedicos(Model model) {
         // Recupera todos os médicos do banco de dados
-        List<Medico> medicos = medicoDAO.findAll();
+        List<Medico> medicos = (List<Medico>) medicoDAO.findAll();
         // Adiciona a lista de médicos ao modelo com a chave "medicos"
         model.addAttribute("medicos", medicos);
         // Retorna o nome da view a ser renderizada

@@ -25,7 +25,7 @@ public class PacienteController {
 
     @GetMapping
     public String listarPacientes(Model model) {
-        List<Paciente> pacientes = pacienteDAO.findAll();
+        List<Paciente> pacientes = (List<Paciente>) pacienteDAO.findAll();
         model.addAttribute("pacientes", pacientes);
         return "pacientes";
     }
