@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "paciente")
@@ -53,6 +55,7 @@ public class Paciente implements Serializable {
     private String Data_nascimento;
 
     @OneToMany(mappedBy = "paciente")
+    @JsonManagedReference
     private List<Consulta> consultas;
     
     @NotBlank
