@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "consulta")
 public class Consulta implements Serializable {
@@ -18,12 +20,15 @@ public class Consulta implements Serializable {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "CPF", foreignKey = @ForeignKey(name = "FK_Paciente"), nullable = false)
     private Paciente paciente;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "crm", foreignKey = @ForeignKey(name = "FK_Medico"), nullable = false)
+    
     private Medico medico;
 
     @NotNull
@@ -49,7 +54,7 @@ public class Consulta implements Serializable {
     public Long getId() {
         return id;
     }
-
+    
     public Paciente getPaciente() {
         return paciente;
     }
