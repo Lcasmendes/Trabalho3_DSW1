@@ -98,7 +98,7 @@ public class ConsultaRestController {
 //    }
 
     // Buscar consultas por CPF do paciente. Retorna uma lista de consultas associadas a um paciente específico.
-    @GetMapping("/paciente/{cpf}")
+    @GetMapping("/clientes/{cpf}")
     public ResponseEntity<List<LinkedHashMap<String, Object>>> buscarPorPaciente(@PathVariable("cpf") String cpf) {
         List<Consulta> consultas = service.buscarPorPacienteCPF(cpf);
         if (consultas.isEmpty()) {
@@ -119,7 +119,7 @@ public class ConsultaRestController {
     }
 
     // Buscar consultas por CRM do médico. Retorna uma lista de consultas associadas a um médico específico.
-    @GetMapping("/medico/{crm}")
+    @GetMapping("/profissionais/{crm}")
     public ResponseEntity<List<LinkedHashMap<String, Object>>> buscarPorMedico(@PathVariable("crm") String crm) {
         List<Consulta> consultas = service.buscarConsultasPorMedico(crm);
         if (consultas.isEmpty()) {
