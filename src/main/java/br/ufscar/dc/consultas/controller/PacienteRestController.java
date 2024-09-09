@@ -34,7 +34,9 @@ public class PacienteRestController {
 
     @Autowired
     private IProfissionalService medicoService;
-
+    
+    
+    // Funções de suporte
     private boolean isJSONValid(String jsonInString) {
         try {
             new ObjectMapper().readTree(jsonInString);
@@ -88,7 +90,29 @@ public class PacienteRestController {
             }
         }
     }
+    
+    private boolean isMedicoAvailable(String crm, String dataConsulta, String horario) {
+        List<Consulta> consultas = consultaService.buscarConsultasPorMedico(crm);
+        for (Consulta consulta : consultas) {
+            if (consulta.getDataConsulta().equals(dataConsulta) && consulta.getHorario().equals(horario)) {
+                return false; // Médico já tem uma consulta nesse horário
+            }
+        }
+        return true;
+    }
 
+    private boolean isPacienteAvailable(String cpf, String dataConsulta, String horario) {
+        List<Consulta> consultas = consultaService.buscarPorPacienteCPF(cpf);
+        for (Consulta consulta : consultas) {
+            if (consulta.getDataConsulta().equals(dataConsulta) && consulta.getHorario().equals(horario)) {
+                return false; // Paciente já tem uma consulta nesse horário
+            }
+        }
+        return true;
+    }
+
+    
+    // Funções do CRUD
     @GetMapping
     public ResponseEntity<List<LinkedHashMap<String, Object>>> lista() {
         List<Paciente> lista = pacienteService.buscarTodos();
@@ -210,10 +234,10 @@ public class PacienteRestController {
                 return ResponseEntity.notFound().build();
             }
 
-            // Atualize os dados básicos do paciente
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(json);
 
+            // Atualizar os dados básicos do paciente
             pacienteExistente.setNome(rootNode.path("nome").asText());
             pacienteExistente.setData_nascimento(rootNode.path("dataNascimento").asText());
             pacienteExistente.setEmail(rootNode.path("email").asText());
@@ -221,18 +245,29 @@ public class PacienteRestController {
             pacienteExistente.setSexo(rootNode.path("sexo").asText());
             pacienteExistente.setRole(rootNode.path("role").asText());
 
-            // Atualize o paciente no banco
             pacienteService.save(pacienteExistente);
 
-            // Atualize as consultas associadas
+            // Atualizar consultas associadas
             JsonNode consultasNode = rootNode.path("consultas");
             if (consultasNode.isArray()) {
                 for (JsonNode consultaNode : consultasNode) {
                     Consulta novaConsulta = new Consulta();
                     parseConsulta(novaConsulta, consultaNode);
 
-                    novaConsulta.setPaciente(pacienteExistente); // Associe o paciente à nova consulta
-                    consultaService.salvar(novaConsulta); // Salve a nova consulta
+                    String medicoCrm = novaConsulta.getMedico().getCRM();
+                    String dataConsulta = novaConsulta.getDataConsulta();
+                    String horario = novaConsulta.getHorario();
+
+                    if (!isMedicoAvailable(medicoCrm, dataConsulta, horario)) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body(null); // Médico já tem consulta nesse horário
+                    }
+
+                    if (!isPacienteAvailable(cpf, dataConsulta, horario)) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body(null); // Paciente já tem consulta nesse horário
+                    }
+
+                    novaConsulta.setPaciente(pacienteExistente);
+                    consultaService.salvar(novaConsulta);
                 }
             }
 
@@ -242,6 +277,7 @@ public class PacienteRestController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
         }
     }
+
 
 
     @DeleteMapping("/{id}")
