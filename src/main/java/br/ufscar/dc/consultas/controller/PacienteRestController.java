@@ -186,7 +186,6 @@ public class PacienteRestController {
             Paciente paciente = new Paciente();
             parse(paciente, json);
 
-            // Primeiro, salve o paciente
             pacienteService.save(paciente);
 
             return ResponseEntity.ok(paciente);
@@ -255,7 +254,7 @@ public class PacienteRestController {
         // Exclua todas as consultas associadas ao paciente
         List<Consulta> consultas = consultaService.buscarPorPacienteCPF(cpf);
         for (Consulta consulta : consultas) {
-            consultaService.remover(consulta.getId()); // Supondo que você tenha um método para excluir consulta por ID
+            consultaService.remover(consulta.getId()); 
         }
 
         // Agora exclua o paciente
